@@ -27,15 +27,7 @@
 var connection = require('./connection');
 
 function get_records_sql(sql, params) {
-    return new Promise(function (resolve, reject) {
-        connection.db.any(sql, params)
-                .then(function (data) {
-                    resolve(data);
-                })
-                .catch(function (err) {
-                    reject(err);
-                });
-    });
+    return connection.db.any(sql, params);
 }
 
 function get_records_select(table, select, params, sort, fields) {
@@ -96,15 +88,7 @@ function count_records_select(table, select, params) {
 }
 
 function count_records_sql(sql, params) {
-    return new Promise(function (resolve, reject) {
-        connection.db.one(sql, params)
-                .then(function (count) {
-                    resolve(count.count);
-                })
-                .catch(function (err) {
-                    reject(err);
-                });
-    });
+    return connection.db.one(sql, params, a => +a.count)
 }
 
 function get_record(table, conditions, fields) {
